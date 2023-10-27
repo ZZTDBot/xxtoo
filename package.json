@@ -1,0 +1,14 @@
+{
+  "name": "@zztdbot/zztdbot",
+  "version": "1.0.1",
+  "description": "制作团队",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
