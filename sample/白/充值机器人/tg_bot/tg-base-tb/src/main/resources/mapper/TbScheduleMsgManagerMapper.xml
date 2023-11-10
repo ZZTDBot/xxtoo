@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tg.base.tb.mapper.TbScheduleMsgManagerMapper">
+
+    <resultMap id="BaseResultMap" type="com.tg.base.tb.entity.TbScheduleMsgManager">
+            <id property="scheduleMsgId" column="schedule_msg_id" jdbcType="INTEGER"/>
+            <result property="tgUserId" column="tg_user_id" jdbcType="VARCHAR"/>
+            <result property="tbBotInstanceId" column="tb_bot_instance_id" jdbcType="INTEGER"/>
+            <result property="qunChatId" column="qun_chat_id" jdbcType="VARCHAR"/>
+            <result property="msgContext" column="msg_context" jdbcType="VARCHAR"/>
+            <result property="msgType" column="msg_type" jdbcType="INTEGER"/>
+            <result property="buttons" column="buttons" jdbcType="VARCHAR"/>
+            <result property="deleteSeconds" column="delete_seconds" jdbcType="INTEGER"/>
+            <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        schedule_msg_id,tg_user_id,tb_bot_instance_id,
+        qun_chat_id,msg_context,msg_type,
+        buttons,delete_seconds,create_user,
+        create_time,update_user,update_time
+    </sql>
+    <delete id="deleteByQunId">
+        delete from tb_schedule_msg_manager
+        where 1 = 1
+          and qun_chat_id = #{qunId}
+    </delete>
+    <select id="selectListByUserTgId" resultType="com.tg.base.tb.entity.TbScheduleMsgManager">
+        select
+            schedule_msg_id,tg_user_id,tb_bot_instance_id,
+            qun_chat_id,msg_context,msg_type,
+            buttons,delete_seconds,create_user,
+            create_time,update_user,update_time
+        from tb_schedule_msg_manager
+        where 1 = 1
+        and tg_user_id = #{userTgId}
+    </select>
+    <select id="selectMsgByQunId" resultType="com.tg.base.tb.entity.TbScheduleMsgManager">
+        select
+            schedule_msg_id,tg_user_id,tb_bot_instance_id,
+            qun_chat_id,msg_context,msg_type,
+            buttons,delete_seconds,create_user,
+            create_time,update_user,update_time
+        from tb_schedule_msg_manager
+        where 1 = 1
+          and qun_chat_id = #{qunId}
+    </select>
+</mapper>

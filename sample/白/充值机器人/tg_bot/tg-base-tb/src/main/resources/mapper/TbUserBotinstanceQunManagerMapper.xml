@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tg.base.tb.mapper.TbUserBotinstanceQunManagerMapper">
+
+    <resultMap id="BaseResultMap" type="com.tg.base.tb.entity.TbUserBotinstanceQunManager">
+        <id property="tbUserBotinstanceQunId" column="tb_user_botinstance_qun_id" jdbcType="INTEGER"/>
+        <result property="tgUserId" column="tg_user_id" jdbcType="VARCHAR"/>
+        <result property="tbBotInstanceId" column="tb_bot_instance_id" jdbcType="INTEGER"/>
+        <result property="tgQunId" column="tg_qun_id" jdbcType="VARCHAR"/>
+        <result property="botRole" column="bot_role" jdbcType="INTEGER"/>
+        <result property="isAnonymous" column="is_anonymous" jdbcType="TINYINT"/>
+        <result property="canManageChat" column="can_manage_chat" jdbcType="TINYINT"/>
+        <result property="canDeleteMessages" column="can_delete_messages" jdbcType="TINYINT"/>
+        <result property="canRestrictMembers" column="can_restrict_members" jdbcType="TINYINT"/>
+
+        <result property="canPromoteMembers" column="can_promote_members" jdbcType="TINYINT"/>
+
+        <result property="canChangeInfo" column="can_change_info" jdbcType="TINYINT"/>
+        <result property="canInviteUsers" column="can_invite_users" jdbcType="TINYINT"/>
+        <result property="canPinMessages" column="can_pin_messages" jdbcType="TINYINT"/>
+        <result property="canManageVideoChats" column="can_manage_video_chats" jdbcType="TINYINT"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tb_user_botinstance_qun_id,tg_user_id,tb_bot_instance_id,
+        tg_qun_id,bot_role,is_anonymous,
+        can_manage_chat,can_delete_messages,can_restrict_members,can_promote_members,
+        can_change_info,can_invite_users,can_pin_messages,
+        can_manage_video_chats,create_user,create_time,
+        update_user,update_time
+    </sql>
+
+    <delete id="deleteByQunBotInsId">
+        DELETE
+        FROM tb_user_botinstance_qun_manager
+        where 1 = 1
+          and tg_qun_id = #{qunId}
+          and tb_bot_instance_id = #{tbBotInstanceId}
+    </delete>
+    <delete id="deleteByUserQunBotId">
+        DELETE
+        FROM tb_user_botinstance_qun_manager
+        where 1 = 1
+          and tg_qun_id = #{qunId}
+          and tb_bot_instance_id = #{tbBotInstanceId}
+          and tg_qun_id = #{qunId}
+    </delete>
+
+    <select id="selectOneByQunBotId"
+            resultType="com.tg.base.tb.entity.TbUserBotinstanceQunManager">
+        select
+            tb_user_botinstance_qun_id,
+            tg_user_id,
+            tb_bot_instance_id,
+            tg_qun_id,
+            bot_role,
+            is_anonymous,
+            can_manage_chat,
+            can_delete_messages,
+            can_restrict_members,
+            can_promote_members,
+            can_change_info,
+            can_invite_users,
+            can_pin_messages,
+            can_manage_video_chats,
+            create_user,
+            create_time,
+            update_user,
+            update_time
+        from tb_user_botinstance_qun_manager
+        where 1 = 1
+          and tg_qun_id = #{qunId}
+          and tb_bot_instance_id = #{tbBotInstanceId}
+    </select>
+
+    <select id="selectOneByUserQunBotId"
+            resultType="com.tg.base.tb.entity.TbUserBotinstanceQunManager">
+        select
+            tb_user_botinstance_qun_id,tg_user_id,tb_bot_instance_id,
+            tg_qun_id,bot_role,is_anonymous,
+            can_manage_chat,can_delete_messages,can_restrict_members,can_promote_members,
+            can_change_info,can_invite_users,can_pin_messages,
+            can_manage_video_chats,create_user,create_time,
+            update_user,update_time
+        from tb_user_botinstance_qun_manager
+        where 1 = 1
+        and tg_user_id = #{tgUserId}
+        and tg_qun_id = #{qunId}
+        and tb_bot_instance_id = #{tbBotInstanceId}
+    </select>
+
+    <select id="selectListByTgUserIdAndBotId"
+            resultType="com.tg.base.tb.service.dto.UserBotInsQunDto">
+        select
+            v1.tb_user_botinstance_qun_id as tbUserBotinstanceQunId,
+            v1.tg_user_id as tgUserId,
+            v1.tb_bot_instance_id as tbBotInstanceId,
+            v1.tg_qun_id as tgQunId,
+
+            v2.qun_name as qunName,
+
+            v2.qun_type as qunType,
+
+            CASE v2.qun_type
+                WHEN 1 THEN '普通群'
+                WHEN 2 THEN '公开群'
+                WHEN 4 THEN '频道'
+                ELSE '其他' END AS qunTypeRemark,
+
+            v1.bot_role as botRole,
+            v1.is_anonymous as isAnonymous,
+            v1.can_manage_chat as canManageChat,
+            v1.can_delete_messages as canDeleteMessages,
+            v1.can_restrict_members as canRestrictMembers,
+            v1.can_promote_members as canPromoteMembers,
+            v1.can_change_info as canChangeInfo,
+            v1.can_invite_users as canInviteUsers,
+            v1.can_pin_messages as canPinMessages,
+            v1.can_manage_video_chats as canManageVideoChats
+        from tb_user_botinstance_qun_manager v1 left join tb_qun_manager v2 on v1.tg_qun_id = v2.tg_qun_id
+        where 1 = 1
+          and tg_user_id = #{tgUserId}
+          and tb_bot_instance_id = #{tbBotInstanceId}
+    </select>
+
+
+</mapper>

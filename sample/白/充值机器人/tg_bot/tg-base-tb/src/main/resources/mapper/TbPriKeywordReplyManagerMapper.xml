@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tg.base.tb.mapper.TbPriKeywordReplyManagerMapper">
+
+    <resultMap id="BaseResultMap" type="com.tg.base.tb.entity.TbPriKeywordReplyManager">
+            <id property="tbPriKeywordId" column="tb_pri_keyword_id" jdbcType="INTEGER"/>
+            <result property="tbBotInstanceId" column="tb_bot_instance_id" jdbcType="INTEGER"/>
+            <result property="keyWord" column="key_word" jdbcType="VARCHAR"/>
+            <result property="replyContext" column="reply_context" jdbcType="VARCHAR"/>
+            <result property="replyMode" column="reply_mode" jdbcType="INTEGER"/>
+            <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tb_pri_keyword_id,tb_bot_instance_id,key_word,
+        reply_context,reply_mode,create_user,
+        create_time,update_user,update_time
+    </sql>
+    <delete id="deleteTbPriKeyObjByBotIdAndKey">
+        delete from tb_pri_keyword_reply_manager
+        where 1 = 1
+          and tb_bot_instance_id = #{botId}
+          and key_word = #{key}
+    </delete>
+
+    <select id="selectByBotIdKeyReplyWord" resultType="com.tg.base.tb.entity.TbPriKeywordReplyManager">
+        select
+            tb_pri_keyword_id,tb_bot_instance_id,key_word,
+            reply_context,reply_mode,create_user,
+            create_time,update_user,update_time
+        from tb_pri_keyword_reply_manager
+        where 1 = 1
+        and tb_bot_instance_id = #{botId}
+        and key_word = #{key}
+    </select>
+    <select id="selectPriKeyReplyByBotId" resultType="com.tg.base.tb.entity.TbPriKeywordReplyManager">
+        select
+            tb_pri_keyword_id,tb_bot_instance_id,key_word,
+            reply_context,reply_mode,create_user,
+            create_time,update_user,update_time
+        from tb_pri_keyword_reply_manager
+        where 1 = 1
+          and tb_bot_instance_id = #{botId}
+    </select>
+
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tg.base.tb.mapper.TbScheduleGroupMsgManagerMapper">
+
+    <resultMap id="BaseResultMap" type="com.tg.base.tb.entity.TbScheduleGroupMsgManager">
+            <id property="scheduleJobId" column="schedule_job_id" jdbcType="INTEGER"/>
+            <result property="tgUserId" column="tg_user_id" jdbcType="VARCHAR"/>
+            <result property="tgQunId" column="tg_qun_id" jdbcType="VARCHAR"/>
+            <result property="tbBotInstanceId" column="tb_bot_instance_id" jdbcType="INTEGER"/>
+            <result property="msgContext" column="msg_context" jdbcType="VARCHAR"/>
+            <result property="jobStatus" column="job_status" jdbcType="INTEGER"/>
+            <result property="jobCron" column="job_cron" jdbcType="VARCHAR"/>
+            <result property="userCron" column="user_cron" jdbcType="VARCHAR"/>
+            <result property="jobGroup" column="job_group" jdbcType="VARCHAR"/>
+            <result property="jobName" column="job_name" jdbcType="VARCHAR"/>
+            <result property="jobClassPath" column="job_class_path" jdbcType="VARCHAR"/>
+            <result property="jobDescribe" column="job_describe" jdbcType="VARCHAR"/>
+            <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        schedule_job_id,tg_user_id,tg_qun_id,
+        tb_bot_instance_id,msg_context,job_status,
+        job_cron,user_cron,job_group,
+        job_name,job_class_path,job_describe,
+        create_user,create_time,update_user,
+        update_time
+    </sql>
+    <update id="updateMsgById">
+        update tb_schedule_group_msg_manager
+        set msg_context = #{msg}
+        where 1 = 1
+          and schedule_job_id = #{scheduleId}
+    </update>
+    <select id="selectByJobStatus" resultType="com.tg.base.tb.entity.TbScheduleGroupMsgManager">
+        select
+            schedule_job_id,tg_user_id,tg_qun_id,
+            tb_bot_instance_id,msg_context,job_status,
+            job_cron,user_cron,job_group,
+            job_name,job_class_path,job_describe,
+            create_user,create_time,update_user,
+            update_time
+        from tb_schedule_group_msg_manager
+        where 1 = 1
+          and job_status = #{jobStatus}
+    </select>
+    <select id="selectByQunId" resultType="com.tg.base.tb.entity.TbScheduleGroupMsgManager">
+        select
+            schedule_job_id,tg_user_id,tg_qun_id,
+            tb_bot_instance_id,msg_context,job_status,
+            job_cron,user_cron,job_group,
+            job_name,job_class_path,job_describe,
+            create_user,create_time,update_user,
+            update_time
+        from tb_schedule_group_msg_manager
+        where 1 = 1
+          and tg_qun_id = #{qunId}
+        order by update_time desc
+    </select>
+
+</mapper>

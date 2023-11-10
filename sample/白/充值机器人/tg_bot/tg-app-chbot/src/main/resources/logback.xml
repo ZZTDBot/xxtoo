@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="log-prefix.path" value="logs/service-reach"/>
+    <property name="info-log.path" value="${log-prefix.path}/info/service-reach.log" />
+    <property name="error-log.path" value="${log-prefix.path}/error/service-reach.log" />
+    <property name="console_log_pattern" value="%yellow(%date{yyyy-MM-dd HH:mm:ss.SSS}) |%highlight(%-5level[%thread]) |%green(%logger{56}.%method:%L) |%msg%n"/>
+    <property name="log_pattern" value="%date{yyyy-MM-dd HH:mm:ss.SSS} |%-5level[%thread] |%logger{56}.%method:%L |%msg%n"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${console_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="infoFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${info-log.path}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${info-log.path}.%d{yyyy-MM-dd}</fileNamePattern>
+            <MaxHistory>15</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="errorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${error-log.path}</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${error-log.path}.%d{yyyy-MM-dd}</fileNamePattern>
+            <MaxHistory>15</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_pattern}</pattern>
+        </encoder>
+    </appender>
+    <logger name="com.tcl.aiquestion.domain.repository" level="DEBUG"/>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="infoFile"/>
+        <appender-ref ref="errorFile"/>
+    </root>
+
+</configuration>
