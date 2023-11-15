@@ -1,1 +1,0 @@
-node tg_usdttrx001_bot.js
